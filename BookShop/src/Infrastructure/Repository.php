@@ -61,8 +61,8 @@ implements
     {
         $categories = [];
         $con = $this->getConnection();
-        $res = $this->executeQuery($con, "SELECT id, name FROM categories");
-        while($cat = $res->fetch_object()) {
+        $res = $this->executeQuery($con, 'SELECT id, name FROM categories');
+        while ($cat = $res->fetch_object()) {
             $categories[] = new \Application\Entities\Category($cat->id, $cat->name);
         }
         $res->close();
@@ -76,17 +76,15 @@ implements
         $con = $this->getConnection();
         $stat = $this->executeStatement(
             $con,
-            "SELECT id, title, author, price FROM books WHERE categoryId = ?",
+            'SELECT id, title, author, price FROM books WHERE categoryId = ?',
             function ($s) use ($categoryId) {
-                $s->bind_param("i", $categoryId);
+                $s->bind_param('i', $categoryId);
             }
         );
-
         $stat->bind_result($id, $title, $author, $price);
-        while($stat->fetch()) {
+        while ($stat->fetch()) {
             $books[] = new \Application\Entities\Book($id, $title, $author, $price);
         }
-
         $stat->close();
         $con->close();
         return $books;
@@ -94,21 +92,91 @@ implements
 
     public function getBooksForFilter(string $filter): array
     {
-        // TODO
+        $filter = "%$filter%";
+        $books = [];
+        $con = $this->getConnection();
+        $stat = $this->executeStatement(
+            $con,
+            'SELECT id, title, author, price FROM books WHERE title LIKE ?',
+            function ($s) use ($filter) {
+                $s->bind_param('s', $filter);
+            }
+        );
+        $stat->bind_result($id, $title, $author, $price);
+        while ($stat->fetch()) {
+            $books[] = new \Application\Entities\Book($id, $title, $author, $price);
+        }
+        $stat->close();
+        $con->close();
+        return $books;
     }
 
     public function getUser(int $id): ?\Application\Entities\User
     {
-        // TODO
+        $user = null;
+        $con = $this->getConnection();
+        $stat = $this->executeStatement(
+            $con,
+            'SELECT id, userName FROM users WHERE id = ?',
+            function ($s) use ($id) {
+                $s->bind_param('i', $id);
+            }
+        );
+        $stat->bind_result($id, $userName);
+        if ($stat->fetch()) {
+            $user = new \Application\Entities\User($id, $userName);
+        }
+        $stat->close();
+        $con->close();
+        return $user;
     }
 
     public function getUserForUserNameAndPassword(string $userName, string $password): ?\Application\Entities\User
     {
-        // TODO
+        $user = null;
+        $con = $this->getConnection();
+        $stat = $this->executeStatement(
+            $con,
+            'SELECT id, passwordHash FROM users WHERE userName = ?',
+            function ($s) use ($userName) {
+                $s->bind_param('s', $userName);
+            }
+        );
+        $stat->bind_result($id, $passwordHash);
+        if ($stat->fetch() && password_verify($password, $passwordHash)) {
+            $user = new \Application\Entities\User($id, $userName);
+        }
+        $stat->close();
+        $con->close();
+        return $user;
     }
 
     public function createOrder(int $userId, array $bookIdsWithCount, string $creditCardName, string $creditCardNumber): ?int
     {
-        // TODO
+        $con = $this->getConnection();
+        $con->autocommit(false);
+        $stat = $this->executeStatement(
+            $con,
+            'INSERT INTO orders (userId, creditCardHolder, creditCardNumber) VALUES (?, ?, ?)',
+            function ($s) use ($userId, $creditCardName, $creditCardNumber) {
+                $s->bind_param('iss', $userId, $creditCardName, $creditCardNumber);
+            }
+        );
+        $orderId = $stat->insert_id;
+        $stat->close();
+        foreach ($bookIdsWithCount as $bookId => $count) {
+            for ($i = 0; $i < $count; $i++) {
+                $this->executeStatement(
+                    $con,
+                    'INSERT INTO orderedBooks (orderId, bookId) VALUES (?, ?)',
+                    function ($s) use ($orderId, $bookId) {
+                        $s->bind_param('ii', $orderId, $bookId);
+                    }
+                )->close();
+            }
+        }
+        $con->commit();
+        $con->close();
+        return $orderId;
     }
 }

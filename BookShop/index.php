@@ -35,8 +35,8 @@ $sp->register(\Infrastructure\FakeRepository::class, isSingleton: true);
 
 $sp->register(\Application\Interfaces\BookRepository::class, \Infrastructure\Repository::class, isSingleton: true);
 $sp->register(\Application\Interfaces\CategoryRepository::class, \Infrastructure\Repository::class, isSingleton: true);
-$sp->register(\Application\Interfaces\UserRepository::class, \Infrastructure\FakeRepository::class, isSingleton: true);
-$sp->register(\Application\Interfaces\OrderRepository::class, \Infrastructure\FakeRepository::class, isSingleton: true);
+$sp->register(\Application\Interfaces\UserRepository::class, \Infrastructure\Repository::class, isSingleton: true);
+$sp->register(\Application\Interfaces\OrderRepository::class, \Infrastructure\Repository::class, isSingleton: true);
 // $sp->register(\Application\Interfaces\BookRepository::class, \Infrastructure\FakeRepository::class, isSingleton: true);
 // $sp->register(\Application\Interfaces\CategoryRepository::class, \Infrastructure\FakeRepository::class, isSingleton: true);
 // $sp->register(\Application\Interfaces\UserRepository::class, \Infrastructure\FakeRepository::class, isSingleton: true);
