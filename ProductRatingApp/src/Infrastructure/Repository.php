@@ -5,7 +5,8 @@ namespace Infrastructure;
 class Repository
     implements
     \Application\Interfaces\UserRepository,
-    \Application\Interfaces\ProductRepository
+    \Application\Interfaces\ProductRepository,
+    \Application\Interfaces\RatingRepository
 {
 
     private $server;
@@ -149,5 +150,45 @@ class Repository
         $result->close();
         $con->close();
         return $products;
+    }
+
+    public function getRatingAverageForProduct(int $productId): float
+    {
+        $con = $this->getConnection();
+        $stat = $this->executeStatement(
+            $con,
+            'SELECT AVG(rating) as averageRating FROM `ratings` WHERE productId = ?',
+            function($s) use ($productId) {
+                $s->bind_param('i', $productId);
+            }
+        );
+
+        $stat->bind_result($averageRating);
+        $stat->fetch();
+
+        $stat->close();
+        $con->close();
+
+        return round($averageRating, 2);
+    }
+
+    public function getRatingCountForProduct(int $productId): int
+    {
+        $con = $this->getConnection();
+        $stat = $this->executeStatement(
+            $con,
+            'SELECT COUNT(ID) as count FROM `ratings` WHERE productId = ?',
+            function($s) use ($productId) {
+                $s->bind_param('i', $productId);
+            }
+        );
+
+        $stat->bind_result($count);
+        $stat->fetch();
+
+        $stat->close();
+        $con->close();
+
+        return $count;
     }
 }

@@ -19,6 +19,7 @@ function registerRepositories(\ServiceProvider $sp): void {
     $sp->register(\Infrastructure\Repository::class, function() { return new \Infrastructure\Repository("localhost", "root", "", "productrating");});
     $sp->register(\Application\Interfaces\UserRepository::class, \Infrastructure\Repository::class, isSingleton: true);
     $sp->register(\Application\Interfaces\ProductRepository::class, \Infrastructure\Repository::class, isSingleton: true);
+    $sp->register(\Application\Interfaces\RatingRepository::class, \Infrastructure\Repository::class, isSingleton: true);
 }
 
 function registerControllers(\ServiceProvider $sp): void {

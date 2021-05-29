@@ -10,13 +10,17 @@ use Application\Interfaces\BookRepository;
 use Application\Interfaces\CategoryRepository;
 use Application\Interfaces\OrderRepository;
 use Application\Interfaces\ProductRepository;
+use Application\Interfaces\RatingRepository;
 use \Application\Interfaces\UserRepository;
 
 class FakeRepository implements
-UserRepository, ProductRepository
+UserRepository,
+    ProductRepository,
+    RatingRepository
 {
     private $mockUsers;
     private $mockProducts;
+    private $mockRatings;
 
     public function __construct()
     {
@@ -29,6 +33,10 @@ UserRepository, ProductRepository
             array(1, 'Hilti', 1, 'Schlagbohrmaschine'),
             array(2, 'Bosch', 1, 'Schlagbohrmaschine'),
             array(3, 'Makita', 1, 'Schlagbohrmaschine')
+        );
+
+        $this->mockRatings = array(
+          array(1, 1, "Testrating", 1, 5, "Hilti quality!", new \DateTime())
         );
     }
 
@@ -86,5 +94,29 @@ UserRepository, ProductRepository
         }
 
         return $result;
+    }
+
+    public function getRatingAverageForProduct(int $productId): float
+    {
+        $ratingSum = 0;
+        $ratingCount = 0;
+        foreach ($this->mockRatings as $rating) {
+            if($rating[2] === $productId) {
+                $ratingCount++;
+                $ratingSum += $rating[2];
+            }
+        }
+        return $ratingCount / $ratingSum;
+    }
+
+    public function getRatingCountForProduct(int $productId): int
+    {
+        $ratingCount = 0;
+        foreach ($this->mockRatings as $rating) {
+            if($rating[2] === $productId) {
+                $ratingCount++;
+            }
+        }
+        return $ratingCount;
     }
 }

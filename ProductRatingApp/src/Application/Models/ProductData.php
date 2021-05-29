@@ -11,7 +11,7 @@ class ProductData {
         private string $producer,
         private UserData $user,
         private string $name,
-        private int $rating,
+        private float $rating,
         private int $ratingCount
     ) { }
 
@@ -54,7 +54,7 @@ class ProductData {
     /**
      * @return int
      */
-    public function getRating(): int
+    public function getRating(): float
     {
         return $this->rating;
     }

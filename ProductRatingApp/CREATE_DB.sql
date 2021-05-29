@@ -59,23 +59,23 @@ INSERT INTO `products` (`id`, `producer`, `userId`, `name`) VALUES
 INSERT INTO `ratings` (`id`, `userId`, `productId`, `rating`, `comment`, `createdDate`) VALUES
 (1, 1, 1, 5, 'Works perfectly!', NOW());
 INSERT INTO `ratings` (`id`, `userId`, `productId`, `rating`, `comment`, `createdDate`) VALUES
-(2, 1, 1, 4, 'Works good!', NOW());
+(2, 1, 2, 4, 'Works good!', NOW());
 INSERT INTO `ratings` (`id`, `userId`, `productId`, `rating`, `comment`, `createdDate`) VALUES
-(3, 1, 1, 3, 'Works perfectly, some parts are missing!', NOW());
+(3, 1, 3, 3, 'Works perfectly, some parts are missing!', NOW());
 INSERT INTO `ratings` (`id`, `userId`, `productId`, `rating`, `comment`, `createdDate`) VALUES
-(4, 1, 1, 4, 'Works fine!', NOW());
+(4, 1, 4, 4, 'Works fine!', NOW());
 INSERT INTO `ratings` (`id`, `userId`, `productId`, `rating`, `comment`, `createdDate`) VALUES
-(5, 1, 1, 5, 'Works perfectly!', NOW());
+(5, 1, 5, 5, 'Works perfectly!', NOW());
 INSERT INTO `ratings` (`id`, `userId`, `productId`, `rating`, `comment`, `createdDate`) VALUES
-(6, 1, 1, 5, 'Works perfectly!', NOW());
+(6, 1, 6, 5, 'Works perfectly!', NOW());
 INSERT INTO `ratings` (`id`, `userId`, `productId`, `rating`, `comment`, `createdDate`) VALUES
-(7, 1, 1, 2, 'Not working!', NOW());
+(7, 1, 7, 2, 'Not working!', NOW());
 INSERT INTO `ratings` (`id`, `userId`, `productId`, `rating`, `comment`, `createdDate`) VALUES
-(8, 1, 1, 2, 'Not good at all!', NOW());
+(8, 1, 7, 2, 'Not good at all!', NOW());
 INSERT INTO `ratings` (`id`, `userId`, `productId`, `rating`, `comment`, `createdDate`) VALUES
-(9, 1, 1, 1, NULL, NOW());
+(9, 1, 7, 1, NULL, NOW());
 INSERT INTO `ratings` (`id`, `userId`, `productId`, `rating`, `comment`, `createdDate`) VALUES
-(10, 1, 1, 1, 'Total crap!', NOW());
+(10, 1, 8, 1, 'Total crap!', NOW());
 
 -- primary keys
 ALTER TABLE `users`

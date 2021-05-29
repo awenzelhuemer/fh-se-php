@@ -18,11 +18,12 @@
                     <tr>
                         <td><?php $htmlOut($product->getName()); ?></td>
                         <td><?php $htmlOut($product->getProducer()); ?></td>
-                        <td><?php for ($i = 0; $i < 5; $i++) {
+                        <td data-bs-placement="top" title="<?php $htmlOut($product->getRating())?> out of 5">
+                            <?php for ($i = 0; $i < 5; $i++) {
                             if($i < $product->getRating()) {?>
                                 <i class="bi bi-star-fill text-warning"></i>
                             <?php } else {?>
-                                <i class="bi bi-star"></i>
+                                <i class="bi-star"></i>
                             <?php }?>
 
                         <?php }?>/

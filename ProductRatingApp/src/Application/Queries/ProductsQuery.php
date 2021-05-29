@@ -3,6 +3,7 @@
 namespace Application\Queries;
 
 use Application\Interfaces\ProductRepository;
+use Application\Interfaces\RatingRepository;
 use Application\Interfaces\UserRepository;
 use Application\Models\ProductData;
 use Application\Models\UserData;
@@ -11,7 +12,8 @@ class ProductsQuery
 {
     public function __construct(
         private ProductRepository $productRepository,
-        private UserRepository $userRepository
+        private UserRepository $userRepository,
+        private RatingRepository $ratingRepository
     ) {
     }
 
@@ -23,14 +25,16 @@ class ProductsQuery
         foreach($products as $product) {
 
             $user = $this->userRepository->getUser($product->getUserId());
+            $averageRating = $this->ratingRepository->getRatingAverageForProduct($product->getId());
+            $totalCount = $this->ratingRepository->getRatingCountForProduct($product->getId());
 
             $results[] = new ProductData(
                 $product->getId(),
                 $product->getProducer(),
                 new UserData($user->getId(), $user->getUserName()),
                 $product->getName(),
-                5 , // TODO get rating
-                23 // TODO get rating count
+                $averageRating,
+                $totalCount
                 );
         }
 
