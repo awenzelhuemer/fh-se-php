@@ -8,7 +8,6 @@ use Application\Services\AuthenticationService;
 class EditRatingCommand {
 
     const Error_NotAuthenticated = 0x01; // 1
-    const Error_EditRatingFailed = 0x2; // 2
 
     public function __construct(
         private AuthenticationService $authenticationService,

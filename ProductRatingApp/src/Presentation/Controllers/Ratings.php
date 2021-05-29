@@ -9,7 +9,9 @@ class Ratings extends Controller {
 
     public function __construct(
         private \Application\Commands\AddRatingCommand $addRatingCommand,
-        private \Application\Commands\EditRatingCommand $editRatingCommand
+        private \Application\Commands\EditRatingCommand $editRatingCommand,
+        private \Application\Queries\ProductDetailQuery $productDetailQuery,
+        private \Application\Queries\SignedInUserQuery $signedInUserQuery,
     ) {
     }
 
@@ -21,9 +23,25 @@ class Ratings extends Controller {
         // Trim comment
         $comment = trim($comment);
         $comment = $comment === "" ? null : $comment;
+        $result = $this->addRatingCommand->execute($pid, $rating, $comment);
 
-        $this->addRatingCommand->execute($pid, $rating, $comment);
+        if($result != 0) {
+            $errors = [];
+            if($result & \Application\Commands\AddRatingCommand::Error_NotAuthenticated) {
+                $errors[] = "Rating can only be added when user is signed in.";
+            }
 
+            if($result & \Application\Commands\AddRatingCommand::Error_CreateRatingFailed) {
+                $errors[] = "Creating of rating failed.";
+            }
+
+            return $this->view(
+                "productDetail", [
+                "user" => $this->signedInUserQuery->execute(),
+                "product" => $this->productDetailQuery->execute($pid),
+                "errors" => $errors
+            ]);
+        }
 
         return $this->redirect("Products", "Detail", ["pid" => $pid]);
     }
@@ -38,8 +56,21 @@ class Ratings extends Controller {
         $comment = trim($comment);
         $comment = $comment === "" ? null : $comment;
 
-        $this->editRatingCommand->execute($rid, $pid, $rating, $comment);
 
+        $result = $this->editRatingCommand->execute($rid, $pid, $rating, $comment);
+        if($result != 0) {
+            $errors = [];
+            if($result & \Application\Commands\EditRatingCommand::Error_NotAuthenticated) {
+                $errors[] = "Rating can only be update when user is signed in.";
+            }
+
+            return $this->view(
+                "productDetail", [
+                     "user" => $this->signedInUserQuery->execute(),
+                     "product" => $this->productDetailQuery->execute($pid),
+                     "errors" => $errors
+                ]);
+        }
 
         return $this->redirect("Products", "Detail", ["pid" => $pid]);
     }
