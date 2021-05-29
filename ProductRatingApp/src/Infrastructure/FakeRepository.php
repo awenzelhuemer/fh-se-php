@@ -24,9 +24,10 @@ UserRepository
     }
 
     public function getUser(int $id): ?User {
+        echo "Size after get " . sizeof($this->mockUsers);
         foreach($this->mockUsers as $u) {
             if($u[0] === $id) {
-                return new User($u[0], $u[1], $u[2]);
+                return new User($u[0], $u[1]);
             }
         }
         return null;
@@ -36,9 +37,38 @@ UserRepository
     {
         foreach($this->mockUsers as $u) {
             if($u[1] === $userName && $u[2] === $password) {
-                return new User($u[0], $u[1], $u[2]);
+                return new User($u[0], $u[1]);
             }
         }
         return null;
+    }
+
+    public function getUserForUserName(string $userName): ?\Application\Entities\User
+    {
+        foreach($this->mockUsers as $u) {
+            if($u[1] === $userName) {
+                return new User($u[0], $u[1]);
+            }
+        }
+        return null;
+    }
+
+    public function createUser(string $userName, string $password) : int
+    {
+        $count = sizeof($this->mockUsers);
+        $newId = 0;
+        if($count > 0) {
+            $user = $this->mockUsers[$count - 1];
+            $newId = $user[0];
+            $newId++;
+        }
+
+        array_push($this->mockUsers,
+            array($newId, $userName, $password)
+        );
+
+        echo "Size after creation" . sizeof($this->mockUsers);;
+
+        return $newId;
     }
 }
