@@ -29,8 +29,8 @@ class ProductsQuery
                 $product->getProducer(),
                 new UserData($user->getId(), $user->getUserName()),
                 $product->getName(),
-                0, // TODO get rating
-                0 // TODO get rating count
+                5 , // TODO get rating
+                23 // TODO get rating count
                 );
         }
 

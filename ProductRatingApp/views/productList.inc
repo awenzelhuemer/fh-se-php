@@ -8,9 +8,8 @@
                 <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Producer</th>
-                    <th>Average Rating</th>
-                    <th>Total rating count</th>
+                    <th>Brand</th>
+                    <th>Rating</th>
                     <th>Created user</th>
                 </tr>
                 </thead>
@@ -19,8 +18,15 @@
                     <tr>
                         <td><?php $htmlOut($product->getName()); ?></td>
                         <td><?php $htmlOut($product->getProducer()); ?></td>
-                        <td><?php  $htmlOut($product->getRating()); ?></td>
-                        <td><?php $htmlOut($product->getRatingCount()); ?></td>
+                        <td><?php for ($i = 0; $i < 5; $i++) {
+                            if($i < $product->getRating()) {?>
+                                <i class="bi bi-star-fill text-warning"></i>
+                            <?php } else {?>
+                                <i class="bi bi-star"></i>
+                            <?php }?>
+
+                        <?php }?>/
+                        <small class="text-primary"><?php $htmlOut($product->getRatingCount())?></small></td>
                         <td><?php $htmlOut($product->getUserName()); ?></td>
                     </tr>
                 <?php } ?>
