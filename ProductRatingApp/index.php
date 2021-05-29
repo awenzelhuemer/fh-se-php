@@ -11,6 +11,8 @@
       $sp->register(\Application\Commands\SignInCommand::class);
       $sp->register(\Application\Commands\SignOutCommand::class);
       $sp->register(\Application\Commands\RegisterCommand::class);
+      $sp->register(\Application\Commands\AddRatingCommand::class);
+      $sp->register(\Application\Commands\EditRatingCommand::class);
 }
 
 function registerServices(\ServiceProvider $sp): void {
@@ -33,6 +35,7 @@ function registerControllers(\ServiceProvider $sp): void {
     $sp->register(\Presentation\Controllers\Home::class);
     $sp->register(\Presentation\Controllers\User::class);
     $sp->register(\Presentation\Controllers\Products::class);
+    $sp->register(\Presentation\Controllers\Ratings::class);
 }
 
 

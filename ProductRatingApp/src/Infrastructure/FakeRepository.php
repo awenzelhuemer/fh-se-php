@@ -142,4 +142,37 @@ UserRepository,
 
         return $result;
     }
+
+    public function addRating(int $userId, int $productId, int $rating, ?string $comment): ?int
+    {
+        $count = sizeof($this->mockUsers);
+        $newId = 0;
+        if($count > 0) {
+            $user = $this->mockUsers[$count - 1];
+            $newId = $user[0];
+            $newId++;
+        }
+
+        $this->mockRatings[] = new Rating(
+            $newId,
+            $userId,
+            $productId,
+            $rating,
+            $comment,
+            date_format(new \DateTime(),"YYYY/MM/DD H:i:s")
+        );
+
+        return $newId;
+    }
+
+    public function editRating(int $id, ?int $userId, int $productId, int $rating, ?string $comment): void
+    {
+        $index = 0;
+        foreach($this->mockRatings as $r) {
+            if($r[0] === $id) {
+                $result[$index] = new Rating($id, $userId, $productId, $comment, $rating, $r[6]);
+            }
+            $index++;
+        }
+    }
 }

@@ -28,7 +28,7 @@ CREATE TABLE `ratings` (
                            `productId` int(11) NOT NULL,
                            `rating` int(1) NOT NULL,
                            `comment` varchar(255) NULL,
-                           `createdDate` date NOT NULL
+                           `createdDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- seeding

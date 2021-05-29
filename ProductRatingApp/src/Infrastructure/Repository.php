@@ -224,7 +224,7 @@ class Repository
         $con = $this->getConnection();
         $stat = $this->executeStatement(
             $con,
-            'SELECT id, userId, productId, rating, comment, createdDate FROM `ratings` WHERE productId = ?',
+            'SELECT id, userId, productId, rating, comment, createdDate FROM `ratings` WHERE productId = ? ORDER BY createdDate DESC',
             function($s) use ($productId) {
                 $s->bind_param('i', $productId);
             }
@@ -239,5 +239,37 @@ class Repository
         $con->close();
 
         return $ratings;
+    }
+
+    public function addRating(int $userId, int $productId, int $rating, ?string $comment): ?int
+    {
+        $con = $this->getConnection();
+        $stat = $this->executeStatement(
+            $con,
+            'INSERT INTO `ratings` (`userId`, `productId`, `rating`, `comment`, `createdDate`) VALUES (?, ?, ?, ?, NOW())',
+            function($s) use ($userId, $productId, $rating, $comment) {
+                $s->bind_param('iiis', $userId, $productId, $rating, $comment);
+            }
+        );
+
+        $newRatingId = $stat->insert_id;
+        $stat->close();
+        $con->close();
+
+        return $newRatingId;
+    }
+
+    public function editRating(int $id, ?int $userId, int $productId, int $rating, ?string $comment): void
+    {
+        $con = $this->getConnection();
+        $stat = $this->executeStatement(
+            $con,
+            'UPDATE ratings SET userId = ?, productId = ?, rating = ?, comment = ? WHERE id = ?',
+            function($s) use ($id, $userId, $productId, $rating, $comment) {
+                $s->bind_param('iiisi', $userId, $productId, $rating, $comment, $id);
+            }
+        );
+        $stat->close();
+        $con->close();
     }
 }
