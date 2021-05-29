@@ -1,5 +1,5 @@
 <?php $render("partial/header", $data); ?>
-    <h1>List of products</h1>
+    <h1>Products</h1>
 
 <?php if($data['products'] !== null) { ?>
     <?php if(sizeof($data['products']) > 0) { ?>
@@ -16,7 +16,9 @@
                 <tbody>
                 <?php foreach($data['products'] as $product) { ?>
                     <tr>
-                        <td><?php $htmlOut($product->getName()); ?></td>
+                        <td>
+                            <?php $link($product->getName(), 'Products', 'Detail', ['pid' => $product->getId()], cssClass: 'link'); ?>
+                        </td>
                         <td><?php $htmlOut($product->getProducer()); ?></td>
                         <td data-bs-placement="top" title="<?php $htmlOut($product->getRating())?> out of 5">
                             <?php for ($i = 0; $i < 5; $i++) {

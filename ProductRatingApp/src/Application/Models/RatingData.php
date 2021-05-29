@@ -1,19 +1,14 @@
 <?php
 
-namespace Application\Entities;
+namespace Application\Models;
 
-class Rating {
-
-    /**
-     * Rating constructor.
-     */
+class RatingData {
     public function __construct(
         private int $id,
-        private int $userId,
-        private int $productId,
+        private UserData $user,
         private int $rating,
         private ?string $comment,
-        private string $createdDate
+        private String $createdDate
     ) { }
 
     /**
@@ -25,19 +20,11 @@ class Rating {
     }
 
     /**
-     * @return int
+     * @return UserData
      */
-    public function getUserId(): int
+    public function getUser(): UserData
     {
-        return $this->userId;
-    }
-
-    /**
-     * @return int
-     */
-    public function getProductId(): int
-    {
-        return $this->productId;
+        return $this->user;
     }
 
     /**
@@ -57,10 +44,12 @@ class Rating {
     }
 
     /**
-     * @return string
+     * @return String
      */
-    public function getCreatedDate(): string
+    public function getCreatedDate(): String
     {
         return $this->createdDate;
     }
+
+
 }

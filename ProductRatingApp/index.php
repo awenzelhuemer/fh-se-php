@@ -2,9 +2,12 @@
 
 
   function registerCommandsAndQueries(\ServiceProvider $sp): void {
+      // queries
       $sp->register(\Application\Queries\SignedInUserQuery::class);
       $sp->register(\Application\Queries\ProductsQuery::class);
+      $sp->register(\Application\Queries\ProductDetailQuery::class);
 
+      // commands
       $sp->register(\Application\Commands\SignInCommand::class);
       $sp->register(\Application\Commands\SignOutCommand::class);
       $sp->register(\Application\Commands\RegisterCommand::class);

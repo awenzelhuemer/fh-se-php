@@ -2,6 +2,9 @@
 
 namespace Infrastructure;
 
+use Application\Entities\Product;
+use Application\Entities\Rating;
+
 class Repository
     implements
     \Application\Interfaces\UserRepository,
@@ -190,5 +193,51 @@ class Repository
         $con->close();
 
         return $count;
+    }
+
+    public function getProduct(int $id): ?Product
+    {
+        $product = null;
+        $con = $this->getConnection();
+        $stat = $this->executeStatement(
+            $con,
+            'SELECT id, producer, userId, name FROM `products` WHERE id = ?',
+            function($s) use ($id) {
+                $s->bind_param('i', $id);
+            }
+        );
+
+        $stat->bind_result($id, $producer, $userId, $name);
+        if ($stat->fetch()) {
+            $product = new \Application\Entities\Product($id, $producer, $userId, $name);
+        }
+
+        $stat->close();
+        $con->close();
+
+        return $product;
+    }
+
+    public function getRatingsFromProduct(int $productId): array
+    {
+        $ratings = [];
+        $con = $this->getConnection();
+        $stat = $this->executeStatement(
+            $con,
+            'SELECT id, userId, productId, rating, comment, createdDate FROM `ratings` WHERE productId = ?',
+            function($s) use ($productId) {
+                $s->bind_param('i', $productId);
+            }
+        );
+
+        $stat->bind_result($id, $userId, $productId, $rating, $comment, $createdDate);
+        while ($stat->fetch()) {
+            $ratings[] = new Rating($id, $userId, $productId, $rating, $comment, $createdDate);
+        }
+
+        $stat->close();
+        $con->close();
+
+        return $ratings;
     }
 }

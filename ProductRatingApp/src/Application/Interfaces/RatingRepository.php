@@ -6,4 +6,5 @@ interface RatingRepository {
 
     public function getRatingAverageForProduct(int $productId): float;
     public function getRatingCountForProduct(int $productId): int;
+    public function getRatingsFromProduct(int $productId): array;
 }

@@ -2,8 +2,6 @@
 
 namespace Application\Models;
 
-use Application\Models\UserData;
-
 class ProductData {
 
     public function __construct(

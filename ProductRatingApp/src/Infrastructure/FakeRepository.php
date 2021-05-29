@@ -5,6 +5,7 @@ namespace Infrastructure;
 use Application\Entities\Book;
 use Application\Entities\Category;
 use Application\Entities\Product;
+use Application\Entities\Rating;
 use Application\Entities\User;
 use Application\Interfaces\BookRepository;
 use Application\Interfaces\CategoryRepository;
@@ -36,7 +37,7 @@ UserRepository,
         );
 
         $this->mockRatings = array(
-          array(1, 1, "Testrating", 1, 5, "Hilti quality!", new \DateTime())
+          array(1, 1, "Testrating", 1, 5, "Hilti quality!", date_format(new \DateTime(),"YYYY/MM/DD H:i:s"))
         );
     }
 
@@ -118,5 +119,27 @@ UserRepository,
             }
         }
         return $ratingCount;
+    }
+
+    public function getProduct(int $id) : ?Product
+    {
+        foreach ($this->mockProducts as $product) {
+            if($product[0] === $id) {
+                return new Product($product[0], $product[1], $product[2], $product[3]);
+            }
+        }
+        return null;
+    }
+
+    public function getRatingsFromProduct(int $productId): array
+    {
+        $result = [];
+        foreach($this->mockRatings as $rating) {
+            if($rating[2] === $productId) {
+                $result[] = new Rating($rating[0], $rating[1], $rating[2], $rating[3], $rating[4], $rating[5]);
+            }
+        }
+
+        return $result;
     }
 }
