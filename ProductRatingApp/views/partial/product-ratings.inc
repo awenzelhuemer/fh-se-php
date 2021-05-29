@@ -35,7 +35,7 @@
                         <label for="ct" class="form-label">Comment</label>
                         <textarea class="form-control" id="ct" name="ct" rows="3"></textarea>
                     </div>
-                    <button class="btn btn-secondary">Add new rating</button>
+                    <button class="btn btn-outline-primary">Add new rating</button>
                     <?php $endForm(); ?>
                 </div>
             </div>
@@ -62,8 +62,10 @@
             </h2>
             <div id="rating<?php $htmlOut($rating->getId()) ?>" class="accordion-collapse collapse <?php ($rating->getComment() !== null) ? $htmlOut('show') : $htmlOut('')?>">
                 <div class="accordion-body">
-
                     <?php if($data["user"] !== null && $data["user"]->getId() === $rating->getUser()->getId()) {?>
+                        <?php $beginForm('Ratings', 'Remove', ["pid" => $product->getId(), "rid" => $rating->getId()], method: 'post'); ?>
+                        <button class="btn btn-sm btn-outline-danger float-end">Remove</button>
+                        <?php $endForm(); ?>
                         <?php $beginForm('Ratings', 'Edit', ["pid" => $product->getId(), "rid" => $rating->getId()], method: 'post'); ?>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="rt" id="rating1" value="1" <?php ($rating->getRating()) === 1 ? $htmlOut('checked') : $htmlOut('') ?>>
@@ -89,7 +91,7 @@
                                 <label for="ct" class="form-label">Comment</label>
                                 <textarea class="form-control" id="ct" name="ct" rows="3"><?php $htmlOut($rating->getComment()) ?></textarea>
                             </div>
-                            <button class="btn btn-secondary">Update existing rating</button>
+                            <button class="btn btn-outline-secondary">Update existing rating</button>
                         <?php $endForm(); ?>
                     <?php } else { ?>
 
