@@ -1,16 +1,19 @@
   <?php
 
 
-function registerCommandsAndQueries(\ServiceProvider $sp): void {
-    // TODO
+  function registerCommandsAndQueries(\ServiceProvider $sp): void {
+      $sp->register(\Application\Queries\SignedInUserQuery::class);
+      $sp->register(\Application\Commands\SignInCommand::class);
+      $sp->register(\Application\Commands\SignOutCommand::class);
 }
 
 function registerServices(\ServiceProvider $sp): void {
-    // TODO
+    $sp->register(\Application\Services\AuthenticationService::class);
 }
 
 function registerRepositories(\ServiceProvider $sp): void {
-    // TODO
+    $sp->register(\Infrastructure\FakeRepository::class, isSingleton: true);
+    $sp->register(\Application\Interfaces\UserRepository::class, \Infrastructure\FakeRepository::class, isSingleton: true);
 }
 
 function registerControllers(\ServiceProvider $sp): void {
@@ -19,6 +22,7 @@ function registerControllers(\ServiceProvider $sp): void {
     }, isSingleton: true);
     
     $sp->register(\Presentation\Controllers\Home::class);
+    $sp->register(\Presentation\Controllers\User::class);
 }
 
 
@@ -39,6 +43,8 @@ registerCommandsAndQueries($sp);
 registerServices($sp);
 
 // --- Infrastructure
+  $sp->register(\Infrastructure\Session::class, isSingleton: true);
+  $sp->register(\Application\Interfaces\Session::class, \Infrastructure\Session::class);
 registerRepositories($sp);
 
 // --- Presentation

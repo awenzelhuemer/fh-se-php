@@ -14,9 +14,10 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbar">
-                <nav class="navbar-nav me-auto">
-                <!-- TODO add navigation -->
+                <nav class="navbar me-auto">
+
                 </nav>
+                <?php $render("partial/user", $data["user"])  ?>
             </div>
         </div>
     </nav>
