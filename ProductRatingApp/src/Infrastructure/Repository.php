@@ -4,7 +4,8 @@ namespace Infrastructure;
 
 class Repository
     implements
-    \Application\Interfaces\UserRepository
+    \Application\Interfaces\UserRepository,
+    \Application\Interfaces\ProductRepository
 {
 
     private $server;
@@ -132,5 +133,21 @@ class Repository
         $con->commit();
         $con->close();
         return $userId;
+    }
+
+    public function getProducts(): array
+    {
+        $products = [];
+        $con = $this->getConnection();
+        $result = $this->executeQuery(
+            $con,
+            'SELECT id, producer, userId, name FROM products'
+        );
+        while ($product = $result->fetch_object()) {
+            $products[] = new \Application\Entities\Product($product->id, $product->producer, $product->userId, $product->name);
+        }
+        $result->close();
+        $con->close();
+        return $products;
     }
 }

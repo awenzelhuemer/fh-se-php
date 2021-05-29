@@ -4,7 +4,7 @@ namespace Application\Queries;
 
 use Application\Interfaces\UserRepository;
 use Application\Services\AuthenticationService;
-use Application\UserData;
+use Application\Models\UserData;
 
 class SignedInUserQuery
 {

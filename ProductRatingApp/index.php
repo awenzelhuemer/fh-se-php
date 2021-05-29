@@ -3,6 +3,8 @@
 
   function registerCommandsAndQueries(\ServiceProvider $sp): void {
       $sp->register(\Application\Queries\SignedInUserQuery::class);
+      $sp->register(\Application\Queries\ProductsQuery::class);
+
       $sp->register(\Application\Commands\SignInCommand::class);
       $sp->register(\Application\Commands\SignOutCommand::class);
       $sp->register(\Application\Commands\RegisterCommand::class);
@@ -16,6 +18,7 @@ function registerRepositories(\ServiceProvider $sp): void {
     $sp->register(\Infrastructure\FakeRepository::class, isSingleton: true);
     $sp->register(\Infrastructure\Repository::class, function() { return new \Infrastructure\Repository("localhost", "root", "", "productrating");});
     $sp->register(\Application\Interfaces\UserRepository::class, \Infrastructure\Repository::class, isSingleton: true);
+    $sp->register(\Application\Interfaces\ProductRepository::class, \Infrastructure\Repository::class, isSingleton: true);
 }
 
 function registerControllers(\ServiceProvider $sp): void {
@@ -25,6 +28,7 @@ function registerControllers(\ServiceProvider $sp): void {
     
     $sp->register(\Presentation\Controllers\Home::class);
     $sp->register(\Presentation\Controllers\User::class);
+    $sp->register(\Presentation\Controllers\Products::class);
 }
 
 

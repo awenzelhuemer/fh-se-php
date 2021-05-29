@@ -14,8 +14,9 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbar">
-                <nav class="navbar me-auto">
-
+                <nav class="navbar-nav me-auto">
+                    <?php $link("Home", "Home", "Index", cssClass: "nav-link"); ?>
+                    <?php $link("Products", "Products", "Index", cssClass: "nav-link"); ?>
                 </nav>
                 <?php $render("partial/user", $data["user"])  ?>
             </div>
