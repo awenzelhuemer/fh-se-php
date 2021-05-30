@@ -25,7 +25,7 @@ class AddProductCommand
         $userId = $this->authenticationService->getUserId();
 
         // check for authenticated user
-        if($userId === null ) {
+        if($userId === null) {
             $errors |= self::Error_NotAuthenticated;
         }
 

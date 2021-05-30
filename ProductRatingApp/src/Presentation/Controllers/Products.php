@@ -30,7 +30,7 @@ class Products extends Controller {
             ]);
     }
 
-    public function GET_Detail(): ViewResult
+    public function GET_Detail(): ActionResult
     {
         $errors = [];
         $product = null;
@@ -50,13 +50,7 @@ class Products extends Controller {
         }
 
         if(sizeof($errors) > 0) {
-            // TODO maybe redirect to 404 page or index
-            return $this->view("productDetail",
-                [
-                    "user" => $this->signedInUserQuery->execute(),
-                    "product" => $product,
-                    "errors" => $errors
-                ]);
+            return $this->redirect("Error404", "Index");
         } else {
             return $this->view("productDetail",
                 [
@@ -86,11 +80,11 @@ class Products extends Controller {
             }
 
             if($result & \Application\Commands\AddProductCommand::Error_InvalidName) {
-                $errors[] = "Invalid product name.";
+                $errors[] = "Product name is required.";
             }
 
             if($result & \Application\Commands\AddProductCommand::Error_InvalidProducer) {
-                $errors[] = "Invalid brand name.";
+                $errors[] = "Brand name is required.";
             }
 
             if($result & \Application\Commands\AddProductCommand::Error_CreateProductFailed) {
@@ -107,7 +101,7 @@ class Products extends Controller {
         return $this->redirect("Products", "Index");
     }
 
-    public function GET_Edit(): ViewResult {
+    public function GET_Edit(): ActionResult {
 
         // check for valid id
 
@@ -128,13 +122,7 @@ class Products extends Controller {
         }
 
         if(sizeof($errors) > 0) {
-            // TODO maybe redirect to 404 page or index
-            return $this->view("productDetail",
-                [
-                    "user" => $this->signedInUserQuery->execute(),
-                    "product" => $product,
-                    "errors" => $errors
-                ]);
+            return $this->redirect("Error404", "Index");
         } else {
             return $this->view("editProduct",
                 [
@@ -159,11 +147,11 @@ class Products extends Controller {
             }
 
             if($result & \Application\Commands\EditProductCommand::Error_InvalidName) {
-                $errors[] = "Invalid product name.";
+                $errors[] = "Product name is required.";
             }
 
             if($result & \Application\Commands\EditProductCommand::Error_InvalidProducer) {
-                $errors[] = "Invalid brand name.";
+                $errors[] = "Brand name is required.";
             }
 
             return $this->view(

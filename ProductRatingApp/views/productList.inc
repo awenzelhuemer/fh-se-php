@@ -1,6 +1,6 @@
 <?php $render("partial/header", $data); ?>
-<h1 class="mb-5">Products</h1>
 
+    <h1 class="mb-4">Products</h1>
 
     <?php $beginForm("Products", "Index"); ?>
     <div class="row mb-3">
@@ -10,9 +10,11 @@
         <div class="col-auto">
             <button class="btn btn-success">Search</button>
         </div>
+        <?php if($data['user'] !== null) { ?>
         <div class="col-auto ms-auto">
             <?php $link("Create new product", 'Products', 'Create', cssClass: 'btn btn-secondary'); ?>
         </div>
+        <?php } ?>
         </div>
     <?php $endForm(); ?>
 
@@ -48,7 +50,7 @@
                         <small class="text-primary"><?php $htmlOut($product->getRatingCount())?></small></td>
                         <td><?php $htmlOut($product->getUserName()); ?></td>
                         <td>
-                            <?php if($product->getUserId() === $data['user']->getId()) {?>
+                            <?php if($data['user'] !== null && $product->getUserId() === $data['user']->getId()) {?>
                                 <?php $link("Edit", 'Products', 'Edit', ['pid' => $product->getId()], cssClass: 'btn btn-sm btn-secondary'); ?>
                             <?php } ?>
                         </td>

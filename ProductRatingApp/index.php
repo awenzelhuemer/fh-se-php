@@ -35,7 +35,8 @@ function registerControllers(\ServiceProvider $sp): void {
     $sp->register(\Presentation\MVC\MVC::class, function () {
         return new \Presentation\MVC\MVC();
     }, isSingleton: true);
-    
+
+    $sp->register(\Presentation\Controllers\Error404::class);
     $sp->register(\Presentation\Controllers\Home::class);
     $sp->register(\Presentation\Controllers\User::class);
     $sp->register(\Presentation\Controllers\Products::class);

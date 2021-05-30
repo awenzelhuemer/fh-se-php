@@ -80,6 +80,12 @@ class User extends Controller {
             if($result & \Application\Commands\RegisterCommand::Error_CreateUserFailed) {
                 $errors[] = "User creation failed.";
             }
+            if($result & \Application\Commands\RegisterCommand::Error_InvalidUsername) {
+                $errors[] = "Username is required.";
+            }
+            if($result & \Application\Commands\RegisterCommand::Error_InvalidPassword) {
+                $errors[] = "Password is required and needs a minimum length of 4.";
+            }
 
             if(sizeof($errors) == 0) {
                 $errors[] = "Something went wrong.";

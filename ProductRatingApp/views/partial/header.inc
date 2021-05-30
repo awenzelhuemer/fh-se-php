@@ -8,7 +8,7 @@
     <title>Product Rating App</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
             <?php $link("Product Rating App", "Home", "Index", cssClass: "navbar-brand"); ?>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
@@ -23,7 +23,7 @@
             </div>
         </div>
     </nav>
-    <div class="container mt-3">
+    <div class="container my-5">
     <?php if(isset($data["errors"])) {
         $render("partial/errors", $data["errors"]);
     } ?>
