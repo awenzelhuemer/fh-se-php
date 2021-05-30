@@ -1,11 +1,11 @@
     <h2 class="mt-4 mb-3">Ratings</h2>
     <?php $product = $data['product'] ?>
     <div class="accordion" id="accordionExample">
-        <?php if($data["user"] === null) { ?>
+        <?php if($data["user"] === null && sizeof($product->getRatings()) == 0) { ?>
             <div class="alert alert-info" role="alert">
                 No ratings.
             </div>
-        <?php } else { ?>
+        <?php } else if($data["user"] !== null) { ?>
         <div class="accordion-item">
         <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#newRating" aria-expanded="true">
