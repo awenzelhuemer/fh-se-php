@@ -10,6 +10,7 @@ class Ratings extends Controller {
     public function __construct(
         private \Application\Commands\AddRatingCommand $addRatingCommand,
         private \Application\Commands\EditRatingCommand $editRatingCommand,
+        private \Application\Commands\RemoveRatingCommand $removeRatingCommand,
         private \Application\Queries\ProductDetailQuery $productDetailQuery,
         private \Application\Queries\SignedInUserQuery $signedInUserQuery,
     ) {
@@ -70,6 +71,28 @@ class Ratings extends Controller {
                      "product" => $this->productDetailQuery->execute($pid),
                      "errors" => $errors
                 ]);
+        }
+
+        return $this->redirect("Products", "Detail", ["pid" => $pid]);
+    }
+
+    public function POST_Remove(): ActionResult {
+        $rid = $this->getParam("rid");
+        $pid = $this->getParam("pid");
+
+        $result = $this->removeRatingCommand->execute($rid);
+        if($result != 0) {
+            $errors = [];
+            if($result & \Application\Commands\EditRatingCommand::Error_NotAuthenticated) {
+                $errors[] = "Rating can only be removed when user is signed in.";
+            }
+
+            return $this->view(
+                "productDetail", [
+                "user" => $this->signedInUserQuery->execute(),
+                "product" => $this->productDetailQuery->execute($pid),
+                "errors" => $errors
+            ]);
         }
 
         return $this->redirect("Products", "Detail", ["pid" => $pid]);

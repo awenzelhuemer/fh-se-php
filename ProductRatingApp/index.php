@@ -12,6 +12,7 @@
       $sp->register(\Application\Commands\SignOutCommand::class);
       $sp->register(\Application\Commands\RegisterCommand::class);
       $sp->register(\Application\Commands\AddRatingCommand::class);
+      $sp->register(\Application\Commands\RemoveRatingCommand::class);
       $sp->register(\Application\Commands\EditRatingCommand::class);
 }
 

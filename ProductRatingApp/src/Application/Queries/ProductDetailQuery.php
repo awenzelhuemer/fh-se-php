@@ -34,7 +34,7 @@ class ProductDetailQuery {
         foreach ($ratingResult as $rating) {
 
             // Load user if necessary
-            $ratingUser = $rating->getUserId() !== $userResult->getId() ? $this->userRepository->getUser($product->getUserId()) : $userResult;
+            $ratingUser = $rating->getUserId() != $userResult->getId() ? $this->userRepository->getUser($rating->getUserId()) : $userResult;
 
             $ratings[] = new RatingData(
                 $rating->getId(),

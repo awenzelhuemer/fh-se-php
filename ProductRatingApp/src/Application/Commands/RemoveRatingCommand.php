@@ -5,8 +5,8 @@ namespace Application\Commands;
 use Application\Interfaces\RatingRepository;
 use Application\Services\AuthenticationService;
 
-class EditRatingCommand {
-
+class RemoveRatingCommand
+{
     const Error_NotAuthenticated = 0x01; // 1
 
     public function __construct(
@@ -14,7 +14,7 @@ class EditRatingCommand {
         private RatingRepository $ratingRepository
     ) { }
 
-    public function execute(int $ratingId, int $productId, int $rating, ?string $comment): int
+    public function execute(int $ratingId): int
     {
         $userId = $this->authenticationService->getUserId();
         $errors = 0;
@@ -25,14 +25,8 @@ class EditRatingCommand {
         }
 
         if(!$errors) {
-            // try to edit rating
-            $this->ratingRepository->editRating(
-                $ratingId,
-                $userId,
-                $productId,
-                $rating,
-                $comment
-            );
+            // try to remove rating
+            $this->ratingRepository->removeRating($ratingId);
         }
 
         return $errors;

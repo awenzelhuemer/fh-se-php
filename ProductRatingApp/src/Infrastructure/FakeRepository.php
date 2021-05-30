@@ -37,7 +37,7 @@ UserRepository,
         );
 
         $this->mockRatings = array(
-          array(1, 1, "Testrating", 1, 5, "Hilti quality!", date_format(new \DateTime(),"YYYY/MM/DD H:i:s"))
+          array(1, 1, 1, 5, "Hilti quality!", date_format(new \DateTime(),"YYYY/MM/DD H:i:s"))
         );
     }
 
@@ -102,7 +102,7 @@ UserRepository,
         $ratingSum = 0;
         $ratingCount = 0;
         foreach ($this->mockRatings as $rating) {
-            if($rating[2] === $productId) {
+            if($rating[3] === $productId) {
                 $ratingCount++;
                 $ratingSum += $rating[2];
             }
@@ -167,12 +167,29 @@ UserRepository,
 
     public function editRating(int $id, ?int $userId, int $productId, int $rating, ?string $comment): void
     {
-        $index = 0;
-        foreach($this->mockRatings as $r) {
-            if($r[0] === $id) {
-                $result[$index] = new Rating($id, $userId, $productId, $comment, $rating, $r[6]);
+        for ($i = 0; $i < sizeof($this->mockRatings); $i++) {
+            if ($this->mockRatings[$i][0] === $id) {
+                $result[$i] = new Rating($id, $userId, $productId, $comment, $rating, $this->mockRatings[$i][5]);
             }
-            $index++;
+        }
+    }
+
+    public function canEditRating(int $id, int $userId): bool
+    {
+        foreach($this->mockRatings as $rating) {
+            if($rating[0] === $id && $rating[1] == $userId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function removeRating(int $id): void
+    {
+        for ($i = 0; $i < sizeof($this->mockRatings); $i++) {
+            if($this->mockRatings[$i][0] === $id) {
+                unset($this->mockRatings[$i]);
+            }
         }
     }
 }

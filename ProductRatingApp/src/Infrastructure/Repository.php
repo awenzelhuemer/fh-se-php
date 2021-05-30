@@ -272,4 +272,38 @@ class Repository
         $stat->close();
         $con->close();
     }
+
+    public function canEditRating(int $id, int $userId): bool
+    {
+        $con = $this->getConnection();
+        $stat = $this->executeStatement(
+            $con,
+            'SELECT COUNT(rating) as count FROM `ratings` WHERE id = ? && userId = ?',
+            function($s) use ($id, $userId) {
+                $s->bind_param('ii', $id, $userId);
+            }
+        );
+
+        $stat->bind_result($count);
+        $stat->fetch();
+
+        $stat->close();
+        $con->close();
+
+        return $count == 1;
+    }
+
+    public function removeRating(int $id)
+    {
+        $con = $this->getConnection();
+        $stat = $this->executeStatement(
+            $con,
+            'DELETE FROM ratings WHERE id = ?',
+            function($s) use ($id) {
+                $s->bind_param('i', $id);
+            }
+        );
+        $stat->close();
+        $con->close();
+    }
 }
