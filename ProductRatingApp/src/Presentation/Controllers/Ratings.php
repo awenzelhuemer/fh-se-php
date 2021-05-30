@@ -21,9 +21,6 @@ class Ratings extends Controller {
         $comment = $this->getParam("ct");
         $pid = $this->getParam("pid");
 
-        // Trim comment
-        $comment = trim($comment);
-        $comment = $comment === "" ? null : $comment;
         $result = $this->addRatingCommand->execute($pid, $rating, $comment);
 
         if($result != 0) {
@@ -52,11 +49,6 @@ class Ratings extends Controller {
         $comment = $this->getParam("ct");
         $rid = $this->getParam("rid");
         $pid = $this->getParam("pid");
-
-        // Trim comment
-        $comment = trim($comment);
-        $comment = $comment === "" ? null : $comment;
-
 
         $result = $this->editRatingCommand->execute($rid, $pid, $rating, $comment);
         if($result != 0) {

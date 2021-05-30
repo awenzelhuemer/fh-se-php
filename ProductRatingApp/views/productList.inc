@@ -1,5 +1,7 @@
 <?php $render("partial/header", $data); ?>
-    <h1>Products</h1>
+<h1 class="mb-5">Products</h1>
+
+<?php $link("Create new product", 'Products', 'Create', cssClass: 'btn btn-secondary'); ?>
 
 <?php if($data['products'] !== null) { ?>
     <?php if(sizeof($data['products']) > 0) { ?>
@@ -11,13 +13,14 @@
                     <th>Brand</th>
                     <th>Rating</th>
                     <th>Created user</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php foreach($data['products'] as $product) { ?>
                     <tr>
                         <td>
-                            <?php $link($product->getName(), 'Products', 'Detail', ['pid' => $product->getId()], cssClass: 'link'); ?>
+                            <?php $link($product->getName(), 'Products', 'Detail', ['pid' => $product->getId()], cssClass: 'link-primary'); ?>
                         </td>
                         <td><?php $htmlOut($product->getProducer()); ?></td>
                         <td data-bs-placement="top" title="<?php $htmlOut($product->getRating())?> out of 5">
@@ -31,6 +34,11 @@
                         <?php }?>/
                         <small class="text-primary"><?php $htmlOut($product->getRatingCount())?></small></td>
                         <td><?php $htmlOut($product->getUserName()); ?></td>
+                        <td>
+                            <?php if($product->getUserId() === $data['user']->getId()) {?>
+                                <?php $link("Edit", 'Products', 'Edit', ['pid' => $product->getId()], cssClass: 'btn btn-sm btn-secondary'); ?>
+                            <?php } ?>
+                        </td>
                     </tr>
                 <?php } ?>
                 </tbody>
@@ -38,7 +46,7 @@
         </div>
     <?php } else { ?>
         <div class="alert alert-info" role="alert">
-            No products in this category.
+            No products founds.
         </div>
     <?php } ?>
 <?php } ?>

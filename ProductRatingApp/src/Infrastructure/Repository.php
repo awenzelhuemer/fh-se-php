@@ -259,14 +259,14 @@ class Repository
         return $newRatingId;
     }
 
-    public function editRating(int $id, ?int $userId, int $productId, int $rating, ?string $comment): void
+    public function editRating(int $id, int $productId, int $rating, ?string $comment): void
     {
         $con = $this->getConnection();
         $stat = $this->executeStatement(
             $con,
-            'UPDATE ratings SET userId = ?, productId = ?, rating = ?, comment = ? WHERE id = ?',
-            function($s) use ($id, $userId, $productId, $rating, $comment) {
-                $s->bind_param('iiisi', $userId, $productId, $rating, $comment, $id);
+            'UPDATE ratings SET productId = ?, rating = ?, comment = ? WHERE id = ?',
+            function($s) use ($id, $productId, $rating, $comment) {
+                $s->bind_param('iisi', $productId, $rating, $comment, $id);
             }
         );
         $stat->close();
@@ -278,7 +278,7 @@ class Repository
         $con = $this->getConnection();
         $stat = $this->executeStatement(
             $con,
-            'SELECT COUNT(rating) as count FROM `ratings` WHERE id = ? && userId = ?',
+            'SELECT COUNT(id) as count FROM `ratings` WHERE id = ? && userId = ?',
             function($s) use ($id, $userId) {
                 $s->bind_param('ii', $id, $userId);
             }
@@ -301,6 +301,58 @@ class Repository
             'DELETE FROM ratings WHERE id = ?',
             function($s) use ($id) {
                 $s->bind_param('i', $id);
+            }
+        );
+        $stat->close();
+        $con->close();
+    }
+
+    public function addProduct(string $producer, int $userId, string $name): ?int
+    {
+        $con = $this->getConnection();
+        $stat = $this->executeStatement(
+            $con,
+            'INSERT INTO products (producer, userId, name) VALUES (?, ?, ?);',
+            function($s) use ($producer, $userId, $name) {
+                $s->bind_param('sis', $producer, $userId, $name);
+            }
+        );
+
+        $newProductId = $stat->insert_id;
+        $stat->close();
+        $con->close();
+
+        return $newProductId;
+    }
+
+    public function canEditProduct(int $id, int $userId): bool
+    {
+        $con = $this->getConnection();
+        $stat = $this->executeStatement(
+            $con,
+            'SELECT COUNT(id) as count FROM products WHERE id = ? && userId = ?',
+            function($s) use ($id, $userId) {
+                $s->bind_param('ii', $id, $userId);
+            }
+        );
+
+        $stat->bind_result($count);
+        $stat->fetch();
+
+        $stat->close();
+        $con->close();
+
+        return $count == 1;
+    }
+
+    public function editProduct(int $id, string $producer, string $name)
+    {
+        $con = $this->getConnection();
+        $stat = $this->executeStatement(
+            $con,
+            'UPDATE products SET producer = ?, name = ? WHERE id = ?',
+            function($s) use ($producer, $name, $id) {
+                $s->bind_param('ssi', $producer, $name, $id);
             }
         );
         $stat->close();

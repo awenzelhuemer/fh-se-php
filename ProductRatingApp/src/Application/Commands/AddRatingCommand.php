@@ -20,6 +20,9 @@ class AddRatingCommand {
         $userId = $this->authenticationService->getUserId();
         $errors = 0;
 
+        $comment = trim($comment);
+        $comment = $comment === "" ? null : $comment;
+
         // check for authenticated user
         if($userId === null) {
             $errors |= self::Error_NotAuthenticated;

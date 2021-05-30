@@ -19,8 +19,11 @@ class EditRatingCommand {
         $userId = $this->authenticationService->getUserId();
         $errors = 0;
 
+        $comment = trim($comment);
+        $comment = $comment === "" ? null : $comment;
+
         // check for authenticated user
-        if($userId === null || !$this->ratingRepository->canEditRating($ratingId, $userId)) {
+        if($userId === null || $this->ratingRepository->canEditRating($ratingId, $userId) == 0) {
             $errors |= self::Error_NotAuthenticated;
         }
 
@@ -28,7 +31,6 @@ class EditRatingCommand {
             // try to edit rating
             $this->ratingRepository->editRating(
                 $ratingId,
-                $userId,
                 $productId,
                 $rating,
                 $comment

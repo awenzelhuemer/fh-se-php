@@ -30,14 +30,26 @@ class ProductData {
     }
 
     /**
-     * @return UserData
+     * @return string
      */
-    public function getUserName(): string
+    public function getUserName(): ?string
     {
         if($this->user) {
             return $this->user->getUserName();
         } else {
-            return "";
+            return null;
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserId(): ?int
+    {
+        if($this->user) {
+            return $this->user->getId();
+        } else {
+            return null;
         }
     }
 

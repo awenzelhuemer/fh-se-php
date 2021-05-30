@@ -148,8 +148,7 @@ UserRepository,
         $count = sizeof($this->mockUsers);
         $newId = 0;
         if($count > 0) {
-            $user = $this->mockUsers[$count - 1];
-            $newId = $user[0];
+            $newId = $this->mockUsers[$count - 1][0];
             $newId++;
         }
 
@@ -165,11 +164,11 @@ UserRepository,
         return $newId;
     }
 
-    public function editRating(int $id, ?int $userId, int $productId, int $rating, ?string $comment): void
+    public function editRating(int $id, int $productId, int $rating, ?string $comment): void
     {
         for ($i = 0; $i < sizeof($this->mockRatings); $i++) {
             if ($this->mockRatings[$i][0] === $id) {
-                $result[$i] = new Rating($id, $userId, $productId, $comment, $rating, $this->mockRatings[$i][5]);
+                $this->mockRatings[$i] = new Rating($id, $this->mockRatings[$i][1],$productId, $comment, $rating, $this->mockRatings[$i][5]);
             }
         }
     }
@@ -189,6 +188,44 @@ UserRepository,
         for ($i = 0; $i < sizeof($this->mockRatings); $i++) {
             if($this->mockRatings[$i][0] === $id) {
                 unset($this->mockRatings[$i]);
+            }
+        }
+    }
+
+    public function addProduct(string $producer, int $userId, string $name): ?int
+    {
+        $count = sizeof($this->mockUsers);
+        $newId = 0;
+        if($count > 0) {
+            $newId = $this->mockUsers[$count - 1][0];
+            $newId++;
+        }
+
+        $this->mockProducts[] = new Product(
+            $newId,
+            $producer,
+            $userId,
+            $name
+        );
+
+        return $newId;
+    }
+
+    public function canEditProduct(int $id, int $userId): bool
+    {
+        foreach($this->mockProducts as $product) {
+            if($product[0] === $id && $product[2] == $userId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function editProduct(int $id, string $producer, string $name)
+    {
+        for ($i = 0; $i < sizeof($this->mockProducts); $i++) {
+            if ($this->mockProducts[$i][0] === $id) {
+                $this->mockProducts[$i] = new Product($id, $producer, $this->mockProducts[$i][2], $name);
             }
         }
     }
