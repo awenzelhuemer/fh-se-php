@@ -13,6 +13,6 @@
                 <i class="bi-star"></i>
             <?php } ?>
         <?php }?>
-        / <small class="text-primary"><?php $htmlOut($product->getRatingCount())?></small>
+        / <small class="text-secondary"><?php $htmlOut($product->getRatingCount())?> ratings</small>
     </li>
 </ul>

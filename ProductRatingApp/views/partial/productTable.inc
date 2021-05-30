@@ -27,7 +27,7 @@
                                 <?php }?>
 
                             <?php }?>/
-                            <small class="text-primary"><?php $htmlOut($product->getRatingCount())?></small></td>
+                            <small class="text-secondary"><?php $htmlOut($product->getRatingCount())?> ratings</small></td>
                         <td><?php $htmlOut($product->getUserName()); ?></td>
                         <td>
                             <?php if($data['user'] !== null && $product->getUserId() === $data['user']->getId()) {?>
