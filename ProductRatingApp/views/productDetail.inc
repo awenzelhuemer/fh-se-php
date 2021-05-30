@@ -3,8 +3,8 @@
     <?php if($data['product'] !== null) { ?>
         <h1>Product</h1>
 
-        <?php $render("partial/product-info", $data); ?>
-        <?php $render("partial/product-ratings", $data); ?>
+        <?php $render("partial/productInfo", $data); ?>
+        <?php $render("partial/productRatings", $data); ?>
 
     <?php } ?>
 
