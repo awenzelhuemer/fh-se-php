@@ -229,4 +229,15 @@ UserRepository,
             }
         }
     }
+
+    public function getProductsForFilter(string $filter): array
+    {
+        $products = [];
+        foreach($this->mockProducts as $product) {
+            if($filter == '' || stripos($product[1], $filter) !== false || stripos($product[3], $filter) !== false) {
+                $products[] = new Product($product[0], $product[2], $product[3], $product[4]);
+            }
+        }
+        return $products;
+    }
 }

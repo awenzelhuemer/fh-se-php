@@ -17,10 +17,10 @@ class ProductsQuery
     ) {
     }
 
-    public function execute(): array{
+    public function execute(?string $filter): array{
         $results = [];
 
-        $products = $this->productRepository->getProducts();
+        $products = $filter === null || $filter == "" ? $this->productRepository->getProducts() : $this->productRepository->getProductsForFilter($filter);
 
         foreach($products as $product) {
 

@@ -358,4 +358,27 @@ class Repository
         $stat->close();
         $con->close();
     }
+
+    public function getProductsForFilter(string $filter): array
+    {
+        $filter = "%$filter%";
+        $products = [];
+        $con = $this->getConnection();
+        $stat = $this->executeStatement(
+            $con,
+            'SELECT id, producer, userId, name FROM products WHERE (name LIKE ? || producer LIKE ?)',
+            function ($s) use ($filter) {
+                $s->bind_param('ss', $filter, $filter);
+            }
+        );
+
+        $stat->bind_result($id, $producer, $userId, $name);
+        while ($stat->fetch()) {
+            $products[] = new \Application\Entities\Product($id, $producer, $userId, $name);
+        }
+        $stat->close();
+        $con->close();
+
+        return $products;
+    }
 }

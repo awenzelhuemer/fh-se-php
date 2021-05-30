@@ -20,10 +20,13 @@ class Products extends Controller {
 
     public function GET_Index(): ViewResult
     {
+        $filter = $this->tryGetParam('f', $filter) ? trim($filter) : null;
+
         return $this->view("productList",
             [
                 "user" => $this->signedInUserQuery->execute(),
-                "products" => $this->productsQuery->execute()
+                "products" => $this->productsQuery->execute($filter),
+                "filter" => $filter,
             ]);
     }
 
