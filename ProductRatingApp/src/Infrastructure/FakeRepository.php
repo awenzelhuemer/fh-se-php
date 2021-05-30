@@ -37,7 +37,7 @@ UserRepository,
         );
 
         $this->mockRatings = array(
-          array(1, 1, 1, 5, "Hilti quality!", date_format(new \DateTime(),"YYYY/MM/DD H:i:s"))
+          array(1, 1, 1, 5, "Hilti quality!", date_format(new \DateTime(),"Y-m-d H:i:s"))
         );
     }
 
@@ -107,7 +107,7 @@ UserRepository,
                 $ratingSum += $rating[2];
             }
         }
-        return $ratingCount / $ratingSum;
+        return $ratingSum > 0 ? $ratingCount / $ratingSum : 0;
     }
 
     public function getRatingCountForProduct(int $productId): int
@@ -158,7 +158,7 @@ UserRepository,
             $productId,
             $rating,
             $comment,
-            date_format(new \DateTime(),"YYYY/MM/DD H:i:s")
+            date_format(new \DateTime(),"Y-m-d H:i:s")
         );
 
         return $newId;

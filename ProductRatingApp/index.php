@@ -1,7 +1,13 @@
-  <?php
+<?php
 
+spl_autoload_register(function ($class) {
+    $file = __DIR__ . '/src/' . str_replace('\\', '/', $class) . '.php';
+    if (file_exists($file)) {
+        require_once($file);
+    }
+});
 
-  function registerCommandsAndQueries(\ServiceProvider $sp): void {
+function registerCommandsAndQueries(\ServiceProvider $sp): void {
       // queries
       $sp->register(\Application\Queries\SignedInUserQuery::class);
       $sp->register(\Application\Queries\ProductsQuery::class);
@@ -42,14 +48,6 @@ function registerControllers(\ServiceProvider $sp): void {
     $sp->register(\Presentation\Controllers\Products::class);
     $sp->register(\Presentation\Controllers\Ratings::class);
 }
-
-
-spl_autoload_register(function ($class) {
-    $file = __DIR__ . '/src/' . str_replace('\\', '/', $class) . '.php';
-    if (file_exists($file)) {
-        require_once($file);
-    }
-});
 
 // === register services
 $sp = new \ServiceProvider();
