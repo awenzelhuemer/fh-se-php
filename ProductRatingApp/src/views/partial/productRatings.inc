@@ -15,27 +15,48 @@
             <div id="newRating" class="accordion-collapse collapse show" data-bs-parent="#newRating">
                 <div class="accordion-body">
                     <?php $beginForm('Ratings', 'Create', ["pid" => $product->getId()], method: 'post'); ?>
+                    <span class="me-4">Rating</span>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="rt" id="rating1" value="1">
-                        <label class="form-check-label" for="rating1">1</label>
+                        <label class="form-check-label" for="rating1">
+                        <i class="bi bi-star"></i>
+                        </label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="rt" id="rating2" value="2">
-                        <label class="form-check-label" for="rating2">2</label>
+                        <label class="form-check-label" for="rating2">
+                            <i class="bi bi-star"></i>
+                            <i class="bi bi-star"></i>
+                        </label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="rt" id="rating3" value="3">
-                        <label class="form-check-label" for="rating3">3</label>
+                        <label class="form-check-label" for="rating3">
+                            <i class="bi bi-star"></i>
+                            <i class="bi bi-star"></i>
+                            <i class="bi bi-star"></i>
+                        </label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="rt" id="rating4" value="4">
-                        <label class="form-check-label" for="rating4">4</label>
+                        <label class="form-check-label" for="rating4">
+                            <i class="bi bi-star"></i>
+                            <i class="bi bi-star"></i>
+                            <i class="bi bi-star"></i>
+                            <i class="bi bi-star"></i>
+                        </label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="rt" id="rating5" value="5" checked>
-                        <label class="form-check-label" for="rating5">5</label>
+                        <label class="form-check-label" for="rating5">
+                            <i class="bi bi-star"></i>
+                            <i class="bi bi-star"></i>
+                            <i class="bi bi-star"></i>
+                            <i class="bi bi-star"></i>
+                            <i class="bi bi-star"></i>
+                        </label>
                     </div>
-                    <div class="mb-3">
+                    <div class="my-3">
                         <label for="ct" class="form-label">Comment</label>
                         <textarea class="form-control" id="ct" name="ct" rows="3"></textarea>
                     </div>
@@ -68,30 +89,52 @@
                 <div class="accordion-body">
                     <?php if($data["user"] !== null && $data["user"]->getId() === $rating->getUser()->getId()) {?>
                         <?php $beginForm('Ratings', 'Remove', ["pid" => $product->getId(), "rid" => $rating->getId()], method: 'post'); ?>
-                        <button class="btn btn-sm btn-outline-danger float-end">Remove</button>
+                        <button class="btn btn-sm btn-outline-danger float-end bi bi-trash-fill"
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="Remove rating" ></button>
                         <?php $endForm(); ?>
                         <?php $beginForm('Ratings', 'Edit', ["pid" => $product->getId(), "rid" => $rating->getId()], method: 'post'); ?>
+                            <span class="me-4">Rating</span>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="rt" id="rating1" value="1" <?php ($rating->getRating()) === 1 ? $htmlOut('checked') : $htmlOut('') ?>>
-                                <label class="form-check-label" for="rating1">1</label>
+                                <input class="form-check-input" type="radio" name="rt" id="rating1Update" value="1" <?php ($rating->getRating()) === 1 ? $htmlOut('checked') : $htmlOut('') ?>>
+                                <label class="form-check-label" for="rating1Update">
+                                    <i class="bi bi-star"></i>
+                                </label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="rt" id="rating2" value="2" <?php ($rating->getRating()) === 2 ? $htmlOut('checked') : $htmlOut('') ?>>
-                                <label class="form-check-label" for="rating2">2</label>
+                                <input class="form-check-input" type="radio" name="rt" id="rating2Update" value="2" <?php ($rating->getRating()) === 2 ? $htmlOut('checked') : $htmlOut('') ?>>
+                                <label class="form-check-label" for="rating2Update">
+                                    <i class="bi bi-star"></i>
+                                    <i class="bi bi-star"></i>
+                                </label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="rt" id="rating3" value="3" <?php ($rating->getRating()) === 3 ? $htmlOut('checked') : $htmlOut('') ?>>
-                                <label class="form-check-label" for="rating3">3</label>
+                                <input class="form-check-input" type="radio" name="rt" id="rating3Update" value="3" <?php ($rating->getRating()) === 3 ? $htmlOut('checked') : $htmlOut('') ?>>
+                                <label class="form-check-label" for="rating3Update">
+                                    <i class="bi bi-star"></i>
+                                    <i class="bi bi-star"></i>
+                                    <i class="bi bi-star"></i>
+                                </label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="rt" id="rating4" value="4" <?php ($rating->getRating()) === 4 ? $htmlOut('checked') : $htmlOut('') ?>>
-                                <label class="form-check-label" for="rating4">4</label>
+                                <input class="form-check-input" type="radio" name="rt" id="rating4Update" value="4" <?php ($rating->getRating()) === 4 ? $htmlOut('checked') : $htmlOut('') ?>>
+                                <label class="form-check-label" for="rating4Update">
+                                    <i class="bi bi-star"></i>
+                                    <i class="bi bi-star"></i>
+                                    <i class="bi bi-star"></i>
+                                    <i class="bi bi-star"></i>
+                                </label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="rt" id="rating5" value="5" <?php ($rating->getRating()) === 5 ? $htmlOut('checked') : $htmlOut('') ?>>
-                                <label class="form-check-label" for="rating5">5</label>
+                                <input class="form-check-input" type="radio" name="rt" id="rating5Update" value="5" <?php ($rating->getRating()) === 5 ? $htmlOut('checked') : $htmlOut('') ?>>
+                                <label class="form-check-label" for="rating5Update">
+                                    <i class="bi bi-star text-secondary"></i>
+                                    <i class="bi bi-star text-secondary"></i>
+                                    <i class="bi bi-star text-secondary"></i>
+                                    <i class="bi bi-star text-secondary"></i>
+                                    <i class="bi bi-star text-secondary"></i>
+                                </label>
                             </div>
-                            <div class="mb-3">
+                            <div class="my-3">
                                 <label for="ct" class="form-label">Comment</label>
                                 <textarea class="form-control" id="ct" name="ct" rows="3"><?php $htmlOut($rating->getComment()) ?></textarea>
                             </div>

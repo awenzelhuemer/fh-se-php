@@ -1,0 +1,503 @@
+= SCR Project (Product Rating)
+:author: Andreas Wenzelhuemer
+:email: <S1910307106@fhooe.at>
+:reproducible:
+:experimental:
+:listing-caption: Listing
+:source-highlighter: rouge
+:src: ../src
+:img: ./img
+:toc:
+:numbered:
+:toclevels: 5
+:rouge-style: github
+
+<<<
+== Lösungsidee
+
+<<<
+== Testfälle
+
+=== Testfall: Allgemein
+
+Website lässt sich ausführen und liefert keine Fehler.
+
+image::{img}/StartPage.png[]
+
+<<<
+=== Testfall: Registrierung
+
+Neuer Benutzer kann sich registrieren und wird angemeldet.
+
+image::{img}/RegisterPage.png[]
+
+image::{img}/AfterRegistration.png[]
+
+<<<
+=== Testfall: Registrierung
+
+Registrierung mit bereits im System vorhandenem Benutzernamen.liefert Valideriungsfehler
+
+image::{img}/RegisterWithExistingUser.png[]
+
+<<<
+=== Testfall: Registrierung
+
+Registrierung mit invaliden Eingaben liefert Validierungsfehler.
+
+image::{img}/RegisterValidation.png[]
+
+<<<
+=== Testfall: Anmeldung
+
+Anmeldung mit validen Eingaben führt zu Anmeldung.
+
+image::{img}/SignIn.png[]
+
+image::{img}/AfterSignIn.png[]
+
+<<<
+=== Testfall: Anmeldung
+
+Anmeldung mit invaliden Eingaben führt zu Fehlermeldungen.
+
+image::{img}/SignInInvalid.png[]
+
+<<<
+=== Testfall: Produktübersicht
+
+Produkte aus der Datenbank werden entsprechend angezeigt.
+
+image::{img}/ProductOverview.png[]
+
+<<<
+=== Testfall: Produktübersicht
+
+Produkte werden entsprechend anhand des Namens bzw. Hersteller gefiltert.
+
+image::{img}/ProductOverviewWithSearch.png[]
+
+<<<
+=== Testfall: Erstellen eines Produktes
+
+Produkt mit entsprechender Eingabe wird erstellt.
+
+image::{img}/NewProduct.png[]
+
+image::{img}/NewProductAfterAdd.png[]
+
+<<<
+=== Testfall: Erstellen eines Produktes
+
+Produkt mit ungültigen Eingaben liefert Validierungsfehler.
+
+image::{img}/NewProductValidation.png[]
+
+<<<
+=== Testfall: Erstellen eines Produktes
+
+Produkterstellung ohne Anmeldung ist nicht möglich.
+
+image::{img}/NewProductWithoutSignIn.png[]
+
+<<<
+=== Testfall: Bearbeiten eines Produktes
+
+Produkt wird entsprechend bearbeitet
+
+image::{img}/EditProductButton.png[]
+
+image::{img}/EditProduct.png[]
+
+image::{img}/EditProductBrandChanged.png[]
+
+image::{img}/EditProductAfterEdit.png[]
+
+<<<
+=== Testfall: Bearbeiten eines Produktes
+
+Produkt mit ungültigen Eingaben liefert Validierungsfehler.
+
+image::{img}/EditProductValidation.png[]
+
+<<<
+=== Testfall: Bearbeiten eines Produktes
+
+Bearbeitung mit Nutzer != Ersteller ist nicht möglich.
+
+image::{img}/EditProductWithoutSignIn.png[]
+
+
+<<<
+=== Testfall: Produktdetails
+Anzeige der Produktdetails inklusive Bewertungen
+
+image::{img}/ProductDetail.png[]
+
+<<<
+=== Testfall: Bewertungen
+Bewertung hinzufügen
+
+image::{img}/ProductDetailAddRating.png[]
+
+image::{img}/ProductDetailAddRatingAfter.png[]
+
+<<<
+=== Testfall: Bewertungen
+Bewertung entfernen
+
+image::{img}/ProductDetailRemoveRating.png[]
+
+image::{img}/ProductDetailRemoveRatingAfter.png[]
+
+<<<
+=== Testfall: Bewertungen
+Bewertung aktualisieren
+
+image::{img}/ProductDetailUpdateRating.png[]
+
+image::{img}/ProductDetailUpdateRatingAfter.png[]
+
+<<<
+== Quellcode
+
+.Index.php
+[source,php]
+----
+include::{src}/Index.php[]
+----
+
+=== Application
+
+==== Commands
+
+.AddProductCommand.php
+[source,php]
+----
+include::{src}/src/Application/Commands/AddProductCommand.php[]
+----
+
+.AddRatingCommand.php
+[source,php]
+----
+include::{src}/src/Application/Commands/AddRatingCommand.php[]
+----
+
+.EditProductCommand.php
+[source,php]
+----
+include::{src}/src/Application/Commands/EditProductCommand.php[]
+----
+
+.EditRatingCommand.php
+[source,php]
+----
+include::{src}/src/Application/Commands/EditRatingCommand.php[]
+----
+
+.RegisterCommand.php
+[source,php]
+----
+include::{src}/src/Application/Commands/RegisterCommand.php[]
+----
+
+.RemoveRatingCommand.php
+[source,php]
+----
+include::{src}/src/Application/Commands/RemoveRatingCommand.php[]
+----
+
+.SignInCommand.php
+[source,php]
+----
+include::{src}/src/Application/Commands/SignInCommand.php[]
+----
+
+.SignOutCommand.php
+[source,php]
+----
+include::{src}/src/Application/Commands/SignOutCommand.php[]
+----
+
+<<<
+==== Entities
+
+.Product.php
+[source,php]
+----
+include::{src}/src/Application/Entities/Product.php[]
+----
+
+.Rating.php
+[source,php]
+----
+include::{src}/src/Application/Entities/Rating.php[]
+----
+
+.User.php
+[source,php]
+----
+include::{src}/src/Application/Entities/User.php[]
+----
+
+<<<
+==== Interfaces
+
+.ProductRepository.php
+[source,php]
+----
+include::{src}/src/Application/Interfaces/ProductRepository.php[]
+----
+
+.RatingRepository.php
+[source,php]
+----
+include::{src}/src/Application/Interfaces/RatingRepository.php[]
+----
+
+.Session.php
+[source,php]
+----
+include::{src}/src/Application/Interfaces/Session.php[]
+----
+
+.UserRepository.php
+[source,php]
+----
+include::{src}/src/Application/Interfaces/UserRepository.php[]
+----
+
+<<<
+==== Models
+
+.ProductData.php
+[source,php]
+----
+include::{src}/src/Application/Models/ProductData.php[]
+----
+
+.ProductDetailData.php
+[source,php]
+----
+include::{src}/src/Application/Models/ProductDetailData.php[]
+----
+
+.RatingData.php
+[source,php]
+----
+include::{src}/src/Application/Models/RatingData.php[]
+----
+
+.UserData.php
+[source,php]
+----
+include::{src}/src/Application/Models/UserData.php[]
+----
+
+<<<
+==== Queries
+
+.ProductDetailQuery.php
+[source,php]
+----
+include::{src}/src/Application/Queries/ProductDetailQuery.php[]
+----
+
+.ProductQuery.php
+[source,php]
+----
+include::{src}/src/Application/Queries/ProductQuery.php[]
+----
+
+.ProductsQuery.php
+[source,php]
+----
+include::{src}/src/Application/Queries/ProductsQuery.php[]
+----
+
+.SignedInUserQuery.php
+[source,php]
+----
+include::{src}/src/Application/Queries/SignedInUserQuery.php[]
+----
+
+<<<
+==== Services
+
+.AuthenticationService.php
+[source,php]
+----
+include::{src}/src/Application/Services/AuthenticationService.php[]
+----
+
+<<<
+=== Infrastructure
+
+.FakeRepository.php
+[source,php]
+----
+include::{src}/src/Infrastructure/FakeRepository.php[]
+----
+
+.Repository.php
+[source,php]
+----
+include::{src}/src/Infrastructure/Repository.php[]
+----
+
+.Session.php
+[source,php]
+----
+include::{src}/src/Infrastructure/Session.php[]
+----
+
+<<<
+=== Presentation
+
+==== Controllers
+
+.Error404.php
+[source,php]
+----
+include::{src}/src/Presentation/Controllers/Error404.php[]
+----
+
+.Home.php
+[source,php]
+----
+include::{src}/src/Presentation/Controllers/Home.php[]
+----
+
+.Products.php
+[source,php]
+----
+include::{src}/src/Presentation/Controllers/Products.php[]
+----
+
+.Ratings.php
+[source,php]
+----
+include::{src}/src/Presentation/Controllers/Ratings.php[]
+----
+
+.User.php
+[source,php]
+----
+include::{src}/src/Presentation/Controllers/User.php[]
+----
+
+<<<
+=== Views
+
+==== Pages
+
+.404.inc
+[source,html]
+----
+include::{src}/views/404.inc[]
+----
+
+.editProduct.inc
+[source,html]
+----
+include::{src}/views/editProduct.inc[]
+----
+
+.home.inc
+[source,html]
+----
+include::{src}/views/home.inc[]
+----
+
+.login.inc
+[source,html]
+----
+include::{src}/views/login.inc[]
+----
+
+.newProduct.inc
+[source,html]
+----
+include::{src}/views/newProduct.inc[]
+----
+
+.productDetail.inc
+[source,html]
+----
+include::{src}/views/productDetail.inc[]
+----
+
+.productList.inc
+[source,html]
+----
+include::{src}/views/productList.inc[]
+----
+
+.register.inc
+[source,html]
+----
+include::{src}/views/register.inc[]
+----
+
+<<<
+==== Partial views
+
+.errors.inc
+[source,html]
+----
+include::{src}/views/partial/errors.inc[]
+----
+
+.footer.inc
+[source,html]
+----
+include::{src}/views/partial/footer.inc[]
+----
+
+.header.inc
+[source,html]
+----
+include::{src}/views/partial/header.inc[]
+----
+
+.productInfo.inc
+[source,html]
+----
+include::{src}/views/partial/productInfo.inc[]
+----
+
+.productRatings.inc
+[source,html]
+----
+include::{src}/views/partial/productRatings.inc[]
+----
+
+.productTable.inc
+[source,html]
+----
+include::{src}/views/partial/productTable.inc[]
+----
+
+<<<
+== Datenbank
+
+=== Datenbankmodell
+
+.Modell
+image::{img}/DataBaseModel.png[]
+
+<<<
+=== Scripts
+
+.CREATE_DB.sql
+[source,sql]
+----
+include::{src}/CREATE_DB.sql[]
+----
+
+<<
+.DB_SEEDING.sql
+[source,sql]
+----
+include::{src}/DB_SEEDING.sql[]
+----

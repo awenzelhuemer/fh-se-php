@@ -31,7 +31,7 @@
                         <td><?php $htmlOut($product->getUserName()); ?></td>
                         <td>
                             <?php if($data['user'] !== null && $product->getUserId() === $data['user']->getId()) {?>
-                                <?php $link("Edit", 'Products', 'Edit', ['pid' => $product->getId()], cssClass: 'btn btn-sm btn-secondary'); ?>
+                                <?php $link("", 'Products', 'Edit', ['pid' => $product->getId()], cssClass: 'btn btn-sm btn-outline-secondary bi bi-pencil-fill'); ?>
                             <?php } ?>
                         </td>
                     </tr>

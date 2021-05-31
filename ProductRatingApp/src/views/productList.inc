@@ -8,11 +8,11 @@
             <input autocomplete="off" class="form-control" name="f" value="<?php $htmlOut($data["filter"]); ?>">
         </div>
         <div class="col-auto">
-            <button class="btn btn-success">Search</button>
+            <button class="btn btn-outline-success">Search</button>
         </div>
         <?php if($data['user'] !== null) { ?>
         <div class="col-auto ms-auto">
-            <?php $link("Create new product", 'Products', 'Create', cssClass: 'btn btn-secondary'); ?>
+            <?php $link("Create new product", 'Products', 'Create', cssClass: 'btn btn-outline-secondary'); ?>
         </div>
         <?php } ?>
         </div>

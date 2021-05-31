@@ -11,7 +11,7 @@
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="pwd" autocomplete="off">
         </div>
-        <button class="btn btn-primary">Log in</button>
+        <button class="btn btn-outline-primary">Log in</button>
     <?php $endForm(); ?>
 
 <?php $render('partial/footer', $data); ?>

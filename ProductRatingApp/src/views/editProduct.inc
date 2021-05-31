@@ -14,7 +14,7 @@
                 <label for="producer" class="form-label">Brand</label>
                 <input class="form-control" id="producer" name="pd" value="<?php $htmlOut($product->getProducer()) ?>" autocomplete="off">
             </div>
-            <button class="btn btn-secondary">Update</button>
+            <button class="btn btn-outline-secondary">Update</button>
         <?php $endForm(); ?>
     <?php } ?>
 

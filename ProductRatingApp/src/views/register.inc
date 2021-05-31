@@ -12,7 +12,7 @@
             <input class="form-control" id="password" name="pwd" type="password" value="<?php $htmlOut($data['password']); ?>" autocomplete="off">
             <div class="form-text">A password with a minimum length of 4 characters is required.</div>
         </div>
-        <button class="btn btn-primary">Register</button>
+        <button class="btn btn-outline-primary">Register</button>
     <?php $endForm(); ?>
 
 <?php $render('partial/footer', $data); ?>

@@ -11,7 +11,7 @@
             <label for="producer" class="form-label">Brand</label>
             <input class="form-control" id="producer" name="pd" autocomplete="off">
         </div>
-        <button class="btn btn-secondary">Create</button>
+        <button class="btn btn-outline-secondary">Create</button>
     <?php $endForm(); ?>
 
 <?php $render('partial/footer', $data); ?>
