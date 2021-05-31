@@ -6,6 +6,6 @@
 <?php else: ?>
   <?php $beginForm('User', 'LogOut', method: 'post', cssClass: 'form-inline'); ?>
     <span class="navbar-text me-2">Welcome, <strong><?php $htmlOut($data->getUserName()); ?></strong>.</span>
-    <button class="btn btn-secondary">Log out</button>
+    <button class="btn btn-dark">Log out</button>
   <?php $endForm(); ?>
 <?php endif; ?>
