@@ -15,6 +15,29 @@
 <<<
 == Lösungsidee
 
+=== Allgemeines
+
+Zu Beginn wurde eine neue Datenbank erstellt, welches genau 3 Tabellen enthält, jeweils eine für Produkt, eine für Benutzer und eine für Bewertungen.
+
+Die Tabellen wurden entsprechend mit Testdaten (in diesem Fall Bohrmaschinen) befüllt, dies wurde in ein eigenes SQL File ausgelagert.
+
+Insgesamt wurden außerdem drei Controller erstellt, welche sich um die Anzeige, Speichern und Aktualisieren der unterschiedlichen Entitäten kümmern, nämlich:
+
+- Users
+- Products
+- Ratings
+
+=== Anzeigen von Produkten
+Anschließend wurde eine Übersichtsseite für die Produkte erstellt, wo alle Produkte mit ihren Bewertungen und der Bewertungsanzahl angezeigt werden. Dazu gibt es eine Query, welche die Produkte mit deren Durchschnittsbewertungen und Anzahl der Bewertungen lädt.
+
+=== Erstellen und Editieren von Produkten
+Für das Editieren und Erstellen wurden zwei eigene Seiten erstellt, wobei diese alle auf den ProductsController zugreifen. Hier wird auch entsprechend validiert, ob es sich um valide Daten handelt (keine leeren Felder) und beim Aktualisieren noch zusätzlich, ob der Nutzer auch tatsächlich der Ersteller ist. Dies wird rein über den Server überprüft, der User wird hier nicht mitgegeben. Wenn über die Url auf ein Produkt zugegriffen werden sollte, welches nicht existiert, wird dies in einer Fehlermeldung angezeigt.
+
+<<<
+=== Produktdetailseite
+Wenn man den Link beim Produktnamen auswählt, kommt man auf eine Detailseite, wo Produktdetails, Durchschnittsbewertung und Anzahl aufgelistet wird. Darunter werden in einem Bootstrap Accordion alle Bewertungen aufgelistet. Zusätzlich gibt es immer an erster Stelle ein Formular, wo neue Bewertungen eingetragen werden können. Darunter werden die anderen Bewertungen aufgelistet und es können entsprechend Bewertungen (nur vom User erstellte) aktualisiert bzw. gelöscht werden. Ansonsten sind diese nur im Read-Only Modus verfügbar. Für die Produktdetailseite wurde eine eigene Query erstellt, da hier zusätzlich die Bewertungen geladen werden müssen. Daher gibt es eine ProduktDetailQuery und eine ProduktQuery.
+Wenn auf ein Produkt zugegriffen wird, welches nicht existiert, wird ein entsprechender Fehler angezeigt.
+
 <<<
 == Testfälle
 
@@ -130,13 +153,18 @@ image::{img}/EditProductWithoutSignIn.png[]
 
 <<<
 === Testfall: Produktdetails
-Anzeige der Produktdetails inklusive Bewertungen
+Anzeige der Produktdetails inklusive Bewertungen.
 
 image::{img}/ProductDetail.png[]
 
+=== Testfall: Produktdetails
+Anzeige eines Produkts, welches nicht existiert, weil es gelöscht wurde oder eine ungültige Id ausgewählt wurde.
+
+image::{img}/ProductDetailNotExisting.png[]
+
 <<<
 === Testfall: Bewertungen
-Bewertung hinzufügen
+Hinzufügen einer neuen Bewertung.
 
 image::{img}/ProductDetailAddRating.png[]
 
@@ -356,12 +384,6 @@ include::{src}/src/Infrastructure/Session.php[]
 
 ==== Controllers
 
-.Error404.php
-[source,php]
-----
-include::{src}/src/Presentation/Controllers/Error404.php[]
-----
-
 .Home.php
 [source,php]
 ----
@@ -390,12 +412,6 @@ include::{src}/src/Presentation/Controllers/User.php[]
 === Views
 
 ==== Pages
-
-.404.inc
-[source,html]
-----
-include::{src}/views/404.inc[]
-----
 
 .editProduct.inc
 [source,html]

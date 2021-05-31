@@ -36,7 +36,7 @@ class Products extends Controller {
         $product = null;
         $idParam = "";
         if(!$this->tryGetParam("pid", $idParam)) {
-            $errors[] = "Product could not be found!";
+            $errors[] = "Product does not exist.";
         } else {
 
             $id = intval($idParam);
@@ -45,12 +45,16 @@ class Products extends Controller {
             }
 
             if($product === null) {
-                $errors[] = "Product could not be found!";
+                $errors[] = "Product does not exist.";
             }
         }
 
         if(sizeof($errors) > 0) {
-            return $this->redirect("Error404", "Index");
+            return $this->view("productDetail", [
+                    "user" => $this->signedInUserQuery->execute(),
+                    "product" => null,
+                    "errors" => $errors
+            ]);
         } else {
             return $this->view("productDetail",
                 [
@@ -122,7 +126,12 @@ class Products extends Controller {
         }
 
         if(sizeof($errors) > 0) {
-            return $this->redirect("Error404", "Index");
+            return $this->view(
+                "editProduct", [
+                "user" => $this->signedInUserQuery->execute(),
+                "product" => null,
+                "errors" => $errors
+            ]);
         } else {
             return $this->view("editProduct",
                 [

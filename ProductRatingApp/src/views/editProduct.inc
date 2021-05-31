@@ -1,10 +1,9 @@
 <?php $render('partial/header', $data); ?>
 
-    <h1 class="mb-3">Edit product</h1>
-
     <?php $product = $data['product'] ?>
 
     <?php if ($product !== null) {?>
+        <h1 class="mb-3">Edit product</h1>
         <?php $beginForm('Products', 'Edit', ["pid" => $product->getId()], method: 'post'); ?>
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
