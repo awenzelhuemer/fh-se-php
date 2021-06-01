@@ -8,6 +8,7 @@ final class ServiceProvider
     private const SERVICE_TYPE = 'type';
     private const SERVICE_FACTORY = 'factory';
     private const SERVICE_IS_SINGLETON = 'singleton';
+    private const SERVICE_FALLBACK_PAGE = "Presentation\Controllers\Error404";
 
     public function register(string $serviceType, string|callable|null $implementation = null, bool $isSingleton = false): void
     {
@@ -60,6 +61,7 @@ final class ServiceProvider
                 $params[] = $this->resolve($pt->getName());
             }
         }
+
         return new $className(...$params);
     }
 }

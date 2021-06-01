@@ -13,7 +13,9 @@ final class MVC
         private string $defaultAction = 'Index',
         private string $controllerParameterName = 'c',
         private string $actionParameterName = 'a',
-    ) {
+        private string $errorController = "Error404"
+    )
+    {
     }
 
     public function getViewPath(): string
@@ -50,10 +52,26 @@ final class MVC
         $action = $_REQUEST[$this->actionParameterName] ?? $this->defaultAction;
         // instanciate controller and call according action method
         $m = $method . '_' . $action;
-        $res = $serviceProvider->resolve($controller)->$m();
+
+        $controllerObject = null;
+        try {
+            $controllerObject = $serviceProvider->resolve($controller);
+
+            if (!method_exists($controllerObject, $m)) {
+                throw new Exception("Method does not exist!");
+            }
+        } catch (\Exception) { // fallback to error404
+            $controller = $this->controllerNamespace . "\\$this->errorController";
+            $controllerObject = $serviceProvider->resolve($controller); // resolve with error controller
+            $m = "GET_" . $this->defaultAction; // set action to index
+        }
+
+        $res = $controllerObject->$m();
+
         if (!is_a($res, ActionResult::class)) {
             throw new Exception("Return value of controller action '$controllerName:$m' is not an instance of ActionResult.");
         }
+
         // handle result
         $res->handle($this);
     }
