@@ -39,6 +39,12 @@ Wenn man den Link beim Produktnamen auswählt, kommt man auf eine Detailseite, w
 Wenn auf ein Produkt zugegriffen wird, welches nicht existiert, wird ein entsprechender Fehler angezeigt.
 
 <<<
+=== Fehlerseite bei ungültigem Controller oder Action
+Wenn ein ungültiger Controllername beziehungsweise eine ungültige Action eingegeben wird, wird automatisch auf eine 404 Page weitergeleitet. Dazu wurde die Methode handleRequest in der Klasse MVC.php erweitert.
+
+image::{img}/404PageNotFound.png[]
+
+<<<
 == Testfälle
 
 === Testfall: Allgemein
