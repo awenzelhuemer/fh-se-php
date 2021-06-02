@@ -390,6 +390,12 @@ include::{src}/src/Infrastructure/Session.php[]
 
 ==== Controllers
 
+.Error404.php
+[source,php]
+----
+include::{src}/src/Presentation/Controllers/Error404.php[]
+----
+
 .Home.php
 [source,php]
 ----
@@ -418,6 +424,12 @@ include::{src}/src/Presentation/Controllers/User.php[]
 === Views
 
 ==== Pages
+
+.error404.inc
+[source,html]
+----
+include::{src}/views/error404.inc[]
+----
 
 .editProduct.inc
 [source,html]
@@ -498,6 +510,14 @@ include::{src}/views/partial/productRatings.inc[]
 [source,html]
 ----
 include::{src}/views/partial/productTable.inc[]
+----
+
+<<<
+=== Styles
+.styles.css
+[source,css]
+----
+include::{src}/css/styles.css[]
 ----
 
 <<<
