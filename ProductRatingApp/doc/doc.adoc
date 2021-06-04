@@ -15,9 +15,12 @@
 <<<
 == Lösungsidee
 
-=== Allgemeines
+=== Architektur
+Als Grundlage für die Architektur wurde das Projekt aus der Übung verwendet. Commands und Queries wurden in eigene Folders verschoben, um die Projektstruktur übersichtlicher zu gestalten. Zum Editieren, Bearbeiten, Löschen und Laden der Daten wurden einige Commands bzw. Queries ergänzt. Beim Presentation-Layer wurden grundsätzlich Controller für Products, Ratings & User erstellt, außerdem gibt es einen Error404 Controller. Datentechnisch wurden nie Entities zurückgegeben, lediglich sogenannte Data Transform Objects (DTOs). Diese wurden gleich wie die Entites benannt und enthalten die Daten in der Form, in der sie auch bei den Views angezeigt werden sollen.
 
-Zu Beginn wurde eine neue Datenbank erstellt, welches genau 3 Tabellen enthält, jeweils eine für Produkt, eine für Benutzer und eine für Bewertungen.
+=== Allgemein
+
+Zu Beginn wurde eine neue Datenbank erstellt, welche genau 3 Tabellen enthält, jeweils eine für Produkt, eine für Benutzer und eine für Bewertungen.
 
 Die Tabellen wurden entsprechend mit Testdaten (in diesem Fall Bohrmaschinen) befüllt, dies wurde in ein eigenes SQL File ausgelagert.
 
