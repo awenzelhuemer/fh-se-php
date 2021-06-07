@@ -59,6 +59,7 @@ class User extends Controller {
         return $this->view("register", [
             "userName" => "",
             "password" => "",
+            "passwordConfirmation" => "",
             "user" => null
         ]);
     }
@@ -66,9 +67,11 @@ class User extends Controller {
     public function POST_Register(): ActionResult {
         $userName = $this->getParam("un");
         $password = $this->getParam("pwd");
+        $passwordConfirmation = $this->getParam("pwdConf");
         $result = $this->registerCommand->execute(
             $userName,
-            $password
+            $password,
+            $passwordConfirmation
         );
 
         // Check for errors
@@ -87,6 +90,10 @@ class User extends Controller {
                 $errors[] = "Password is required and needs a minimum length of 4.";
             }
 
+            if($result & \Application\Commands\RegisterCommand::Error_PasswordDifferent) {
+                $errors[] = "Password does not match with confirmation.";
+            }
+
             if(sizeof($errors) == 0) {
                 $errors[] = "Something went wrong.";
             }
@@ -94,6 +101,7 @@ class User extends Controller {
             return $this->view("register", [
                 "userName" => $userName,
                 "password" => $password,
+                "passwordConfirmation" => $passwordConfirmation,
                 "user" => null,
                 "errors" => $errors
             ]);
@@ -106,6 +114,7 @@ class User extends Controller {
             return $this->view("register", [
                 "userName" => $userName,
                 "password" => $password,
+                "passwordConfirmation" => $passwordConfirmation,
                 "user" => null,
                 "errors" => ["Sign in after registration was unsuccessful!"]
             ]);

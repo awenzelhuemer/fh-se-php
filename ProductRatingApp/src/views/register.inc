@@ -12,6 +12,10 @@
             <input class="form-control" id="password" name="pwd" type="password" value="<?php $htmlOut($data['password']); ?>" autocomplete="off">
             <div class="form-text">A password with a minimum length of 4 characters is required.</div>
         </div>
+        <div class="mb-3">
+            <label for="passwordConfirmation" class="form-label">Confirm password</label>
+            <input class="form-control" id="passwordConfirmation" name="pwdConf" type="password" value="<?php $htmlOut($data['passwordConfirmation']); ?>" autocomplete="off">
+        </div>
         <button class="btn btn-outline-primary">Register</button>
     <?php $endForm(); ?>
 
